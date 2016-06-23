@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Step 5: Refund</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+
+	<script>
+// Push kundenummer til dataLayer
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'uid': 'kunde_1234567890'
+});
+</script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9N3LT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M9N3LT');</script>
+<!-- End Google Tag Manager -->
+
+<h1>Step 5: Refund</h1>
+
+
+<div><a href="homePage.html">Back to start: Home Page >></a></div>
+
+
+<script>
+// Refund an entire transaction by providing the transaction ID. This example assumes the details
+// of the completed refund are available when the page loads:
+dataLayer.push({
+  'event': 'refund',
+  'ecommerce': {
+    'refund': {
+      'actionField': {'id': 'T12345'}         // Transaction ID. Required for purchases and refunds.
+    }
+  }
+});
+</script>
+	
+</body>
+</html>

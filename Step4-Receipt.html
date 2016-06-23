@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Step 4: Receipt</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+
+  <script>
+// Push kundenummer til dataLayer
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'uid': 'kunde_1234567890'
+});
+</script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9N3LT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M9N3LT');</script>
+<!-- End Google Tag Manager -->
+
+<h1>Step 4: Receipt</h1>
+
+<div><a href="homePage.html">Back to start: Home Page >></a></div>
+<br />
+<div><a href="Step5-Refund.html">Wrong product? Go to Refund >></a></div>
+
+
+<script>
+/**
+ * A function to handle a click on a checkout button. This function uses the eventCallback
+ * data layer variable to handle navigation after the ecommerce data has been sent to Google Analytics.
+ */
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
+    'event': 'checkout',
+    'ecommerce': {
+      'checkout': {
+        'actionField': {'step': 4 },
+        'products': [{
+          'name': 'Triblend Android T-Shirt',
+          'id': '12345',
+          'price': '15.25',
+          'brand': 'Online brand',
+          'category': 'Online Category',
+          'variant': 'Online Variant',
+          'quantity': 1
+       }]
+     }
+   }
+   });
+</script>
+
+
+<script>
+// Send transaction data with a pageview if available
+// when the page loads. Otherwise, use an event when the transaction
+// data becomes available.
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'event': 'purchase',
+  'ecommerce': {
+	'currencyCode': 'DKK',
+    'purchase': {
+      'actionField': {
+        'id': 'ordrenummer',
+        'affiliation': 'leveringsmetode',
+        'revenue': '35.43', // omsætning ex. moms
+        'tax':'4.90', // momsen for ordren, fx omsætning * 0.2
+        'shipping': '5.99', // leveringsomkostninger
+        'coupon': '' // Voucher, findes formentlig ikke, så bare efterlad tom
+      },
+      'products': [{
+        'name': 'Triblend Android T-Shirt',
+        'id': 'Produkt SKU',
+        'price': '15.25', // Stykpris - IKKE totalpris for varelinjen. GA ganger stykprisen med den angivne quantity
+        'brand': 'Mærke',
+        'category': 'Main category/Sub category/Sub-sub category',
+        'variant': 'Online Variant', // Fx farve, størrelse, etc. Ellers blot efterlad tom
+        'quantity': 1,
+        'coupon': ''
+       },
+       {
+        'name': 'Voucher',
+        'id': '12345',
+        'price': '-5.25',
+        'brand': 'Online brand',
+        'category': 'Main category/Sub category/Sub-sub category',
+        'variant': 'Online Variant',
+        'quantity': 1,
+        'coupon': 'Free T-shirt for Sofie'
+       }]
+    }
+  }
+});
+</script>
+
+	
+</body>
+</html>

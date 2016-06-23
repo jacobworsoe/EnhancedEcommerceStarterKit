@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Product Page</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+
+  <script>
+// Push kundenummer til dataLayer
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'uid': 'kunde_1234567890'
+});
+</script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9N3LT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M9N3LT');</script>
+<!-- End Google Tag Manager -->
+
+<h1>Product Page</h1>
+
+<div><a href="Step1-Basket.html" id="onlineBasketLink" style="display: none;">Continue to Basket >></a></div>
+<div><a href="#" id="addToCart">Add Product to Cart >></a></div>
+<br />
+<div><a href="Step1-Reservation-Basket.html" id="reservationBasketLink" style="display: none;">Continue to Reservation Basket >></a></div>
+<div><a href="#" id="addToReservationCart">Add Product to Reservation Cart >></a></div>
+
+
+<script>
+// Measure a view of product details. This example assumes the detail view occurs on pageload,
+// and also tracks a standard pageview of the details page.
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'event': 'productDetailsView',
+  'ecommerce': {
+    'impressions': [
+     {
+       'name': 'Blue T-Shirt',        // Name or ID is required.
+       'id': '99999',
+       'price': '15.25',
+       'brand': 'Google',
+       'category': 'Main category/Sub category/Sub-sub category',
+       'variant': 'Gray',
+       'list': 'Related Products',
+       'position': 1
+     },
+     {
+       'name': 'Donut Friday Scented T-Shirt',
+       'id': '67890',
+       'price': '33.75',
+       'brand': 'Google',
+       'category': 'Main category/Sub category/Sub-sub category',
+       'variant': 'Black',
+       'list': 'Related Products',
+       'position': 2
+     }], // impressions
+    'detail': {
+      'actionField': {'list': 'Apparel Gallery'},  // 'detail' actions have an optional list property.
+      'products': [{
+        'name': 'Triblend Android T-Shirt',       // Name or ID is required.
+        'id': '99887766',
+       'price': '33.75',
+       'brand': 'Apple brand',
+       'category': 'Main category/Sub category/Sub-sub category',
+       'variant': 'Apple variant',
+       }]
+     } // detail
+  } // ecommerce
+}); // dataLayer
+
+
+// Event when product is added to cart
+$("#addToCart").on("click", function() {
+
+  // Measure adding a product to a shopping cart by using an 'add' actionFieldObject
+// and a list of productFieldObjects.
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'event': 'addToCart',
+  'ecommerce': {
+    'currencyCode': 'EUR',
+    'add': {                                // 'add' actionFieldObject measures.
+      'products': [{                        //  adding a product to a shopping cart.
+        'name': 'Triblend Android T-Shirt',
+        'id': '12345',
+        'price': '15.25',
+        'brand': 'Google',
+        'category': 'Main category/Sub category/Sub-sub category',
+        'variant': 'Gray',
+        'quantity': 1
+       }]
+    }
+  }
+});
+
+$("h1").text("Product was added to the cart");
+$("#addToCart").hide();
+$("#addToReservationCart").hide();
+$("#onlineBasketLink").show();
+});
+
+// Event when product is added to cart
+$("#addToReservationCart").on("click", function() {
+
+  // Measure adding a product to a shopping cart by using an 'add' actionFieldObject
+// and a list of productFieldObjects.
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'event': 'addToCart',
+  'ecommerce': {
+    'currencyCode': 'DKK',
+    'add': {                                // 'add' actionFieldObject measures.
+      'products': [{                        //  adding a product to a shopping cart.
+        'name': 'Triblend Android T-Shirt',
+        'id': '12345',
+        'price': '15.25',
+        'brand': 'Reservation brand',
+        'category': 'Main category/Sub category/Sub-sub category',
+        'variant': 'Reservation Variant',
+        'quantity': 1
+       }]
+    }
+  }
+});
+
+$("h1").text("Product was added to the reservation cart");
+$("#addToCart").hide();
+$("#addToReservationCart").hide();
+$("#reservationBasketLink").show();
+});
+
+</script>
+
+	
+</body>
+</html>
+
