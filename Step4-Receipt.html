@@ -66,35 +66,35 @@ window.dataLayer = window.dataLayer || [];
 dataLayer.push({
   'event': 'purchase',
   'ecommerce': {
-	'currencyCode': 'DKK',
+	'currencyCode': 'USD',
     'purchase': {
       'actionField': {
-        'id': 'ordrenummer',
-        'affiliation': 'leveringsmetode',
-        'revenue': '35.43', // omsætning ex. moms
-        'tax':'4.90', // momsen for ordren, fx omsætning * 0.2
-        'shipping': '5.99', // leveringsomkostninger
-        'coupon': '' // Voucher, findes formentlig ikke, så bare efterlad tom
+        'id': 'T123456',                         // Transaction ID. Required for purchases and refunds.
+        'affiliation': 'affiliation: Online',   // Online levering, Køb og afhent senere, reserver og hent indenfor 24 timer
+        'revenue': '35.43',                     // Total transaction value (incl. tax and shipping)
+        'tax':'4.90',
+        'shipping': '5.99',
+        'coupon': 'SUMMER_SALE'
       },
-      'products': [{
-        'name': 'Triblend Android T-Shirt',
-        'id': 'Produkt SKU',
-        'price': '15.25', // Stykpris - IKKE totalpris for varelinjen. GA ganger stykprisen med den angivne quantity
-        'brand': 'Mærke',
+      'products': [{                            // List of productFieldObjects.
+        'name': 'Triblend Android T-Shirt',     // Name or ID is required.
+        'id': '12345',
+        'price': '15.25',
+        'brand': 'Online brand',
         'category': 'Main category/Sub category/Sub-sub category',
-        'variant': 'Online Variant', // Fx farve, størrelse, etc. Ellers blot efterlad tom
+        'variant': 'Online Variant',
         'quantity': 1,
-        'coupon': ''
+        'coupon': ''                            // Optional fields may be omitted or set to empty string.
        },
-       {
-        'name': 'Voucher',
+       {                            // List of productFieldObjects.
+        'name': 'Voucher',     // Name or ID is required.
         'id': '12345',
         'price': '-5.25',
         'brand': 'Online brand',
         'category': 'Main category/Sub category/Sub-sub category',
         'variant': 'Online Variant',
         'quantity': 1,
-        'coupon': 'Free T-shirt for Sofie'
+        'coupon': 'Free T-shirt for Sofie'                            // Optional fields may be omitted or set to empty string.
        }]
     }
   }
