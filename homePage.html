@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Homepage</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
 
@@ -38,16 +39,10 @@ dataLayer.push({
     'promoView': {
       'promotions': [                     // Array of promoFieldObjects.
        {
-         'id': 'JUNE_PROMO13',            // ID or Name is required.
-         'name': 'June Sale',
-         'creative': 'banner1',
-         'position': 'slot1'
-       },
-       {
-         'id': 'FREE_SHIP13',
-         'name': 'Free Shipping Promo',
-         'creative': 'skyscraper1',
-         'position': 'slot2'
+         'id': 'PromoViewAlone',            // ID or Name is required.
+         'name': 'PromoViewAlone',
+         'creative': 'PromoViewAlone',
+         'position': '3'
        }]
     }
   }
@@ -63,7 +58,7 @@ dataLayer.push({
 <div><a href="#" id="signUp">Click to Sign-up for Newsletter</a></div>
 
 <script>
-  
+
 $("#signUp").on("click", function() {
 
   window.dataLayer = window.dataLayer || [];

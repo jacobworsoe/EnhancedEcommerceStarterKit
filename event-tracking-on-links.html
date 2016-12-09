@@ -48,6 +48,37 @@ $(".universal-analytics-event-tracking").on("click", function(){
   ga('send', 'event', 'Universal Analytics Event Tracking', 'Click');
 });
 
+var timeInMs = Date.now();
+
+console.log(timeInMs);
+
+var i = 1;
+
+  setInterval(function() {
+   
+   if(i < 11) {
+
+   //ga('send', 'event', 'Event interval test',timeInMs, 'Interval ' + i);
+
+ }
+
+    i++;
+
+  }, 100);
+
+
+  timeInMs = Date.now();
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  ga('send', 'event', 'Event interval test v2',timeInMs, 'Interval');
+  
 </script>
 
 </body>
