@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Purchase</title>
+</head>
+<body>
+
+<script>
+// Push kundenummer til dataLayer
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'uid': 'refundCustomer_12345'
+});
+</script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9N3LT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M9N3LT');</script>
+<!-- End Google Tag Manager -->
+
+<h1>Purchase</h1>
+
+<script>
+var transactionId = "44444";
+var text = "Normal purchase";
+
+window.dataLayer = window.dataLayer || []
+dataLayer.push({
+   'event': 'purchase',
+   'transactionId': transactionId,
+   'transactionAffiliation': 'Affiliation',
+   'transactionTotal': transactionId,
+   'transactionTax': transactionId * 0.2,
+   'transactionShipping': transactionId / 100,
+   'transactionProducts': [{
+       'sku': transactionId,
+       'name': text + ' product',
+       'category': '',
+       'price': transactionId,
+       'quantity': 1
+   }]
+});
+</script>
+	
+</body>
+</html>

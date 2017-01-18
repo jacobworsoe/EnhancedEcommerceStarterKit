@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>productPromotionClick</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<title>Purchase</title>
 </head>
 <body>
 
@@ -11,7 +10,7 @@
 // Push kundenummer til dataLayer
 window.dataLayer = window.dataLayer || [];
 dataLayer.push({
-  'uid': 'kunde_1234567890'
+  'uid': 'refundCustomer_12345'
 });
 </script>
 
@@ -25,33 +24,41 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-M9N3LT');</script>
 <!-- End Google Tag Manager -->
 
-<h1>productPromotionClick</h1>
-
-<div><a href="productPage.html">Go to Product Page >></a></div>
-
+<h1>Purchase</h1>
 
 <script>
-/**
- * Call this function when a user clicks on a promotion. This function uses the eventCallBack
- * datalayer variable to handle navigation after the ecommerce data is sent to Google Analytics.
- *
- */
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-    'event': 'promoclick',
-    'ecommerce': {
-      'promoClick': {
-        'promotions': [
-         {
-           'creative': 'PromoClick',
-           'name': 'PromoClick',     
-           'position': '1',
-           'id': 'PromoClick'
-         }]
-      }
+var transactionId = "22222";
+var text = "refund purchase";
+
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'event': 'purchase',
+  'ecommerce': {
+	'currencyCode': 'DKK',
+    'purchase': {
+      'actionField': {
+        'id': transactionId,
+        'affiliation': 'Affiliation',
+        'revenue': transactionId,
+        'tax': transactionId * 0.2,
+        'shipping': transactionId / 100,
+        'coupon': ''
+      },
+      'products': [{
+        'name': text + ' product',
+        'id': transactionId,
+        'price': transactionId,
+        'brand': '',
+        'category': '',
+        'variant': '',
+        'quantity': 1,
+        'coupon': ''
+       }]
     }
-   });
+  }
+});
 </script>
 
+	
 </body>
 </html>
