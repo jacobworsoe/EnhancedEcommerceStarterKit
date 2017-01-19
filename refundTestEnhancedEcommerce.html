@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Purchase</title>
+</head>
+<body>
+
+<script>
+// Push kundenummer til dataLayer
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  'uid': 'refundCustomer_12345'
+});
+</script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9N3LT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M9N3LT');</script>
+<!-- End Google Tag Manager -->
+
+<h1>Purchase</h1>
+
+<script>
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+var transactionId = getParameterByName('tid');
+var refund = getParameterByName('refund');
+var text = "Normal purchase";
+
+console.log(refund);
+
+window.dataLayer = window.dataLayer || [];
+
+if(!refund) {
+
+dataLayer.push({
+  'event': 'purchase',
+  'ecommerce': {
+	'currencyCode': 'DKK',
+    'purchase': {
+      'actionField': {
+        'id': transactionId,
+        'affiliation': 'Affiliation',
+        'revenue': transactionId,
+        'tax': transactionId * 0.2,
+        'shipping': transactionId / 100,
+        'coupon': ''
+      },
+      'products': [{
+        'name': 'Product 1',
+        'id': transactionId + 1,
+        'price': (transactionId / 3) + 100,
+        'brand': '',
+        'category': '',
+        'variant': '',
+        'quantity': 10,
+        'coupon': ''
+       },
+       {
+        'name': 'Product 2',
+        'id': transactionId + 2,
+        'price': (transactionId / 3) - 100,
+        'brand': '',
+        'category': '',
+        'variant': '',
+        'quantity': 5,
+        'coupon': ''
+       },
+       {
+        'name': 'Product 3',
+        'id': transactionId + 3,
+        'price': (transactionId / 3),
+        'brand': '',
+        'category': '',
+        'variant': '',
+        'quantity': 2,
+        'coupon': ''
+       }]
+    }
+  }
+});
+
+}
+
+
+
+if(refund === "full") {
+
+  dataLayer.push({
+    'event': 'purchase',
+    'ecommerce': {
+      'refund': {
+        'actionField': {'id': transactionId}
+      }
+    }
+  });
+
+}
+
+
+
+
+
+
+if(refund === "partial") {
+
+  dataLayer.push({
+    'event': 'purchase',
+    'ecommerce': {
+      'refund': {
+        'actionField': {'id': transactionId},
+        'products': [
+              {'id': transactionId + 1, 'quantity': 10},
+              {'id': transactionId + 2,'quantity': 1}
+         ]
+       }
+    }
+  });
+
+}
+
+</script>
+
+	
+</body>
+</html>
