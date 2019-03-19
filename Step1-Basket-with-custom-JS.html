@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Step 1: Basket</title>
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+
+<h1>Step 1: Basket (local)</h1>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
+    'event': 'checkout',
+    'ecommerce': {
+      'checkout': {
+        'actionField': {'step': 1 },
+        products: [
+        {
+          name: "Triblend Android T-Shirt",
+          id: "12345",
+          price: "15.25",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Gray",
+          quantity: 1,
+          coupon: ""
+        }
+      ]
+     }
+   }
+   });
+</script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({  
+  products: [
+    {
+      'name': 'Triblend Android T-Shirt',
+       'id': '12345',
+       'price': '15.25',
+       'brand': 'Google',
+       'category': 'Apparel',
+       'variant': 'Gray',
+       'list': 'Search Results',
+       'position': 1
+    }
+  ]
+});
+</script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+  event: "customImpressions"  
+});
+</script>
+	
+</body>
+</html>

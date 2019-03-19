@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Step 4: Receipt</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
 
@@ -16,18 +17,18 @@ dataLayer.push({
 </script>
 
 <!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9N3LT"
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TDMCBQ3"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M9N3LT');</script>
+})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
 <!-- End Google Tag Manager -->
 
 <h1>Step 4: Receipt</h1>
 
-<div><a href="homePage.html">Back to start: Home Page >></a></div>
+<div><a href="/">Back to start: Home Page >></a></div>
 <br />
 <div><a href="Step5-Refund.html">Wrong product? Go to Refund >></a></div>
 
@@ -69,38 +70,37 @@ dataLayer.push({
 	'currencyCode': 'USD',
     'purchase': {
       'actionField': {
-        'id': 'T123456',                         // Transaction ID. Required for purchases and refunds.
-        'affiliation': 'affiliation: Online',   // Online levering, Køb og afhent senere, reserver og hent indenfor 24 timer
-        'revenue': '35.43',                     // Total transaction value (incl. tax and shipping)
+        'id': 'T123456',
+        'affiliation': 'affiliation: Online',
+        'revenue': '35.43',
         'tax':'4.90',
         'shipping': '5.99',
         'coupon': 'SUMMER_SALE'
       },
-      'products': [{                            // List of productFieldObjects.
-        'name': 'Triblend Android T-Shirt',     // Name or ID is required.
+      'products': [{
+        'name': 'Triblend Android T-Shirt',
         'id': '12345',
         'price': '15.25',
-        'brand': 'Online brand',
-        'category': 'Main category/Sub category/Sub-sub category',
-        'variant': 'Online Variant',
+        'brand': 'Wagner',
+        'category': 'T-shirts',
+        'variant': 'Blue',
         'quantity': 1,
-        'coupon': ''                            // Optional fields may be omitted or set to empty string.
+        'coupon': 'free blue shirt'
        },
-       {                            // List of productFieldObjects.
-        'name': 'Voucher',     // Name or ID is required.
+       {
+        'name': 'Triblend Android T-Shirt',
         'id': '12345',
-        'price': '-5.25',
-        'brand': 'Online brand',
-        'category': 'Main category/Sub category/Sub-sub category',
-        'variant': 'Online Variant',
-        'quantity': 1,
-        'coupon': 'Free T-shirt for Sofie'                            // Optional fields may be omitted or set to empty string.
+        'price': '15.25',
+        'brand': 'Wagner',
+        'category': 'T-shirts',
+        'variant': 'Red',
+        'quantity': 2,
+        'coupon': 'summer sale for red shirt'
        }]
     }
   }
 });
 </script>
-
 	
 </body>
 </html>

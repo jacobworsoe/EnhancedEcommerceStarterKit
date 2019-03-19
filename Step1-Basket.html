@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Step 1: Basket</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
 
@@ -16,13 +17,13 @@ dataLayer.push({
 </script>
 
 <!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9N3LT"
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TDMCBQ3"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M9N3LT');</script>
+})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
 <!-- End Google Tag Manager -->
 
 <h1>Step 1: Basket + remove a product from basket</h1>
@@ -41,15 +42,81 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'ecommerce': {
       'checkout': {
         'actionField': {'step': 1 },
-        'products': [{
-          'name': 'Triblend Android T-Shirt',
-          'id': '12345',
-          'price': '15.25',
-          'brand': 'Online brand',
-          'category': 'Main category/Sub category/Sub-sub category',
-          'variant': 'Online Variant',
-          'quantity': 1
-       }]
+        products: [
+        {
+          name: "Triblend Android T-Shirt",
+          id: "12345",
+          price: "15.25",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Gray",
+          quantity: 1,
+          coupon: ""
+        },
+        {
+          name: "Donut Friday Scented T-Shirt",
+          id: "67890",
+          price: "33.75",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Black",
+          quantity: 1
+        },
+        {
+          name: "kjfdlkjflkdfjdkf",
+          id: "kjfdlkjflkdfjdkf",
+          price: "33.75",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Black",
+          quantity: 1
+        },
+        {
+          name: "fælkdjflkdjflkd",
+          id: "fælkdjflkdjflkd",
+          price: "33.75",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Black",
+          quantity: 1
+        },
+        {
+          name: "lkdfjlkfdjf",
+          id: "lkdfjlkfdjf",
+          price: "33.75",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Black",
+          quantity: 1
+        },
+        {
+          name: "lkfjdkjdf",
+          id: "lkfjdkjdf",
+          price: "33.75",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Black",
+          quantity: 1
+        },
+        {
+          name: "ældskdsjds",
+          id: "ældskdsjds",
+          price: "33.75",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Black",
+          quantity: 1
+        },
+        {
+          name: "skjdkjsflksjfs",
+          id: "skjdkjsflksjfs",
+          price: "33.75",
+          brand: "Google",
+          category: "Apparel",
+          variant: "Black",
+          quantity: 1
+        }
+      ]
      }
    }
    });
@@ -57,22 +124,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <script>
 // Measure the removal of a product from a shopping cart.
+/*
 dataLayer.push({
   'event': 'removeFromCart',
   'ecommerce': {
-    'remove': {                               // 'remove' actionFieldObject measures.
-      'products': [{                          //  removing a product to a shopping cart.
-          'name': 'Donut Friday Scented T-Shirt',
-	      'id': '99887766',
-       'price': '33.75',
-       'brand': 'Online2 brand',
-       'category': 'Main category/Sub category/Sub-sub category',
-       'variant': 'Online2 Variant',
-          'quantity': 1
-      }]
+    'remove': {
+      'products': [{}]
     }
   }
 });
+*/
 </script>
 	
 </body>
