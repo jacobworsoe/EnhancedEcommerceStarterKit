@@ -4,21 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Product Page</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>
-
-  <script>
-// Push kundenummer til dataLayer
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  'uid': 'kunde_1234567890'
-});
-</script>
+<body> 
 
 <!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TDMCBQ3"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -28,66 +18,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <h1>Product Page</h1>
 
-<div><a href="Step1-Basket.html" id="onlineBasketLink" style="display: none;">Continue to Basket >></a></div>
-<div><a href="#" id="addToCart">Add Product to Cart >></a></div>
-
 <script>
-// Measure a view of product details. This example assumes the detail view occurs on pageload,
-// and also tracks a standard pageview of the details page.
 window.dataLayer = window.dataLayer || [];
 dataLayer.push({
   event: "productDetailsView",
   ecommerce: {
-    impressions: [
-      {
-        name: "Blue T-Shirt", // Name or ID is required.
-        id: "99999",
-        price: "15.25",
-        brand: "Google",
-        category: "Main category/Sub category/Sub-sub category",
-        variant: "Gray",
-        list: "Related Products",
-        position: 1
-      },
-      {
-        name: "Donut Friday Scented T-Shirt",
-        id: "67890",
-        price: "33.75",
-        brand: "Google",
-        category: "Main category/Sub category/Sub-sub category",
-        variant: "Black",
-        list: "Related Products",
-        position: 2
-      }
-    ], // impressions
     detail: {
-      actionField: { list: "Apparel Gallery" }, // 'detail' actions have an optional list property.
-      products: [
-        {
-          name: "Triblend Android T-Shirt", // Name or ID is required.
-          id: "99887766",
-          price: "33.75",
-          brand: "Apple brand",
-          category: "Main category/Sub category/Sub-sub category",
-          variant: "Apple variant"
-        }
-      ]
-    } // detail
-  } // ecommerce
-}); // dataLayer
-
-
-// Event when product is added to cart
-$("#addToCart").on("click", function() {
-
-  // Measure adding a product to a shopping cart by using an 'add' actionFieldObject
-// and a list of productFieldObjects.
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  event: "AddToBasket",
-  ecommerce: {
-    currencyCode: "EUR",
-    add: {      
       products: [
         {
           name: "Triblend Android T-Shirt",
@@ -95,86 +31,17 @@ dataLayer.push({
           price: "15.25",
           brand: "Google",
           category: "Apparel",
-          variant: "Gray",
-          quantity: 1,
-          coupon: ""
-        },
-        {
-          name: "Donut Friday Scented T-Shirt",
-          id: "67890",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "kjfdlkjflkdfjdkf",
-          id: "kjfdlkjflkdfjdkf",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "fælkdjflkdjflkd",
-          id: "fælkdjflkdjflkd",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "lkdfjlkfdjf",
-          id: "lkdfjlkfdjf",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "lkfjdkjdf",
-          id: "lkfjdkjdf",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "ældskdsjds",
-          id: "ældskdsjds",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "skjdkjsflksjfs",
-          id: "skjdkjsflksjfs",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
+          variant: "Gray"
         }
       ]
-    }
-  }
-});
-
-$("h1").text("Product was added to the cart");
-$("#addToCart").hide();
-$("#addToReservationCart").hide();
-$("#onlineBasketLink").show();
-});
-
+    } // detail
+  } // ecommerce
+}); // dataLayer
 </script>
 
+<a href="addToBasket.html"><button type="button" class="btn btn-primary btn-lg">Add to cart >></button></a>
+
+<a href="Step1-Basket.html"><button type="button" class="btn btn-secondary btn-lg">Jump to checkout >></button></a>
 	
 </body>
 </html>

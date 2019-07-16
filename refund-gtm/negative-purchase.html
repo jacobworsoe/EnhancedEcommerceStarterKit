@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Purchase</title>
+</head>
+<body>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
+<!-- End Google Tag Manager -->
+
+<h1>Purchase</h1>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+
+dataLayer.push({
+  'event': 'purchase',
+    'ecommerce': {
+    'purchase': {
+      'actionField': {
+        'id': '12345',
+        'affiliation': '',
+        'revenue': '-1050',
+        'tax':'-210',
+        'shipping': '-50',
+        'coupon': ''
+      },
+      'products': [{
+        'name': 'T-Shirt',
+        'id': '123',
+        'price': '300',
+        'brand': '',
+        'category': '',
+        'variant': '',
+        'quantity': -1,
+        'coupon': ''
+       },
+       {
+        'name': 'Jeans',
+        'id': '456',
+        'price': '700',
+        'brand': '',
+        'category': '',
+        'variant': '',
+        'quantity': -1
+       }]
+    }
+  }
+});
+
+</script>
+</body>
+</html>

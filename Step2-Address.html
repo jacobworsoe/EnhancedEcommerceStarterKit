@@ -1,129 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Step 2: Address</title>
+  <meta charset="UTF-8">
+  <title>Step 2: Address</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
-  <script>
-// Push kundenummer til dataLayer
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  uid: "kunde_1234567890"
-});
-</script>
-
-
 <!-- Google Tag Manager -->
-<script>(function(w, d, s, l, i) {
-  w[l] = w[l] || [];
-  w[l].push({
-    "gtm.start": new Date().getTime(),
-    event: "gtm.js"
-  });
-  var f = d.getElementsByTagName(s)[0],
-    j = d.createElement(s),
-    dl = l != "dataLayer" ? "&l=" + l : "";
-  j.async = true;
-  j.src = "//www.googletagmanager.com/gtm.js?id=" + i + dl;
-  f.parentNode.insertBefore(j, f);
-})(window, document, "script", "dataLayer", "GTM-TDMCBQ3");</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
 <!-- End Google Tag Manager -->
 
-
 <h1>Step 2: Address</h1>
-
-<div><a href="Step3-Payment.html">Continue to Step 3: Payment >></a></div>
 
 <script>
 window.dataLayer = window.dataLayer || [];
 dataLayer.push({
-  event: "checkout",
-  ecommerce: {
-    checkout: {
-      actionField: { step: 2, option: "GLS pakkeshop" },
+  'event': 'checkout',
+  'ecommerce': {
+    'checkout': {
+      'actionField': {'step': 2 },
       products: [
-        {
-          name: "Triblend Android T-Shirt",
-          id: "12345",
-          price: "15.25",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Gray",
-          quantity: 1,
-          coupon: ""
-        },
-        {
-          name: "Donut Friday Scented T-Shirt",
-          id: "67890",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "kjfdlkjflkdfjdkf",
-          id: "kjfdlkjflkdfjdkf",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "fælkdjflkdjflkd",
-          id: "fælkdjflkdjflkd",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "lkdfjlkfdjf",
-          id: "lkdfjlkfdjf",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "lkfjdkjdf",
-          id: "lkfjdkjdf",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "ældskdsjds",
-          id: "ældskdsjds",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        },
-        {
-          name: "skjdkjsflksjfs",
-          id: "skjdkjsflksjfs",
-          price: "33.75",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Black",
-          quantity: 1
-        }
-      ]
-    }
-  }
-});
+      {
+        name: "Triblend Android T-Shirt",
+        id: "12345",
+        price: "15.25",
+        brand: "Google",
+        category: "Apparel",
+        variant: "Gray",
+        quantity: 1
+      }
+    ]
+   }
+ }
+ });
 </script>
+
+<a href="Step3-Payment.html"><button type="button" class="btn btn-primary btn-lg">Continue to Step 3: Payment >></button></a>
+
+<a href="Step1-Basket.html"><button type="button" class="btn btn-secondary btn-lg"><< Back to Basket</button></a>
 
 </body>
 </html>
