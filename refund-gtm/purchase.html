@@ -17,6 +17,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <h1>Purchase</h1>
 
 <script>
+var products = [{ 'name': 'AL-KO Easy Flex MB 2010 Fugerenser', 'id': '123', 'price': '300', 'brand': '', 'category': '', 'variant': '', 'quantity': 1, 'coupon': '' }, { 'name': 'ASUS F507UB-BR293 notebook', 'id': '456', 'price': '700', 'brand': '', 'category': '', 'variant': '', 'quantity': 1 }, { 'name': 'Triblend Android T-Shirt', 'id': '12345', 'price': '15.25', 'brand': 'Google', 'category': 'Apparel', 'variant': 'Gray', 'quantity': 1 }, { 'name': 'Donut Friday Scented T-Shirt', 'id': '67890', 'price': '33.75', 'brand': 'Google', 'category': 'Apparel', 'variant': 'Black', 'quantity': 1 }, { 'name': 'Goal Flow Garden Hose', 'id': 'p001', 'brand': 'Google Analytics', 'category': 'Home Goods', 'variant': 'Green', 'price': '20', 'quantity': 1 }, { 'id': 'P12345', 'name': 'Android Warhol T-Shirt', 'category': 'Apparel/T-Shirts', 'brand': 'Google', 'variant': 'Black', 'price': '33.75', 'quantity': 1 }, { 'name': 'YouTube Organic T-Shirt', 'id': 'P67890', 'brand': 'YouTube', 'category': 'Apparel/T-Shirts', 'variant': 'gray', 'price': '15', 'quantity': 1 }, { 'name': 'RBR Herregårdssten Grå 14 x 21 x 5 cm', 'id': '456', 'price': '700', 'brand': '', 'category': '', 'variant': '', 'quantity': 1 }, { 'name': 'Dobbelt carport', 'id': '456', 'price': '700', 'brand': '', 'category': '', 'variant': '', 'quantity': 1 }, { 'name': 'MAKITA Vinkelsliber 18V 125 mm SOLO', 'id': '456', 'price': '700', 'brand': '', 'category': '', 'variant': '', 'quantity': 1 }];
+
 window.dataLayer = window.dataLayer || [];
 
 dataLayer.push({
@@ -24,32 +26,14 @@ dataLayer.push({
     'ecommerce': {
     'purchase': {
       'actionField': {
-        'id': '12345',
+        'id': '7123456',
         'affiliation': '',
         'revenue': '1050',
         'tax':'210',
         'shipping': '50',
         'coupon': ''
       },
-      'products': [{
-        'name': 'T-Shirt',
-        'id': '123',
-        'price': '300',
-        'brand': '',
-        'category': '',
-        'variant': '',
-        'quantity': 1,
-        'coupon': ''
-       },
-       {
-        'name': 'Jeans',
-        'id': '456',
-        'price': '700',
-        'brand': '',
-        'category': '',
-        'variant': '',
-        'quantity': 1
-       }]
+      'products': [products[Math.round(Math.random() * 10)]]
     }
   }
 });

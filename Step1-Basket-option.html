@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Add to basket</title>
+	<title>Step 1: Basket (option)</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body> 
+<body>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -16,42 +16,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
 <!-- End Google Tag Manager -->
 
-<h1>Add to basket</h1>
+<h1>Step 1: Basket (option)</h1>
 
 <script>
 window.dataLayer = window.dataLayer || [];
 dataLayer.push({
-  event: "AddToBasket",
-  ecommerce: {    
-    add: {      
-      products: [
-        {
-          name: "Triblend Android T-Shirt",
-          id: "12345",
-          price: "15.25",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Gray",
-          quantity: 1
-        },
-     {
-       name: 'Donut Friday Scented T-Shirt',
-       id: '67890',
-       price: '33.75',
-       brand: 'Google',
-       category: 'Apparel',
-       variant: 'Black',
-       quantity: 1       
-     }
-      ]
+  'event': 'checkout',
+  'ecommerce': {
+    'checkout_option': {
+      'actionField': {
+        step: 1,
+        option: 'MobilePay'
+      }
     }
   }
-});
+ });
 </script>
 
-<a href="Step1-Basket.html"><button type="button" class="btn btn-primary btn-lg">Go to basket >></button></a>
+<a href="Step2-Address.html"><button type="button" class="btn btn-primary btn-lg">Continue to Step 2: Address >></button></a>
 
-<a href="Step2-Address.html"><button type="button" class="btn btn-secondary btn-lg">Continue to Step 2: Address >></button></a>
-	
+<a href="productPage.html"><button type="button" class="btn btn-secondary btn-lg"><< Back to Product Detail Page</button></a>
+
 </body>
 </html>
