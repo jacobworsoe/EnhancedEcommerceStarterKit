@@ -1,112 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Product List</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product List</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-  <script>
-// Push kundenummer til dataLayer
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  'uid': 'kunde_1234567890'
-});
-</script>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-TDMCBQ3");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <script>
+      // Push kundenummer til dataLayer
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        uid: "kunde_1234567890",
+      });
+    </script>
 
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TDMCBQ3"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
-<!-- End Google Tag Manager -->
+    <h1>Product list with two products</h1>
+    <div><a href="#" id="productClick">Click on a Product >></a></div>
 
+    <br />
+    <div><a href="#" id="lazyLoad">Lazy load more products >></a></div>
 
-<h1>Product list with two products</h1>
-<div><a href="#" id="productClick">Click on a Product >></a></div>
+    <script>
+      // Product impressions are sent by pushing an impressions object
+      // containing one or more impressionFieldObjects.
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        ecommerce: {
+          currencyCode: "DKK", // Local currency is optional.
+          impressions: [
+            {
+              name: "Triblend Android T-Shirt", // Name or ID is required.
+              id: "12345",
+              price: "15.25",
+              brand: "Google",
+              category: "Main category/Sub category/Sub-sub category",
+              variant: "Gray",
+              list: "Product List",
+              position: 1,
+            },
+            {
+              name: "Donut Friday Scented T-Shirt",
+              id: "99887766",
+              price: "33.75",
+              brand: "Apple brand",
+              category: "Main category/Sub category/Sub-sub category",
+              variant: "Apple variant",
+              list: "Product List",
+              position: 2,
+            },
+          ],
+        },
+        event: "impressionSent",
+      });
 
-<br />
-<div><a href="#" id="lazyLoad">Lazy load more products >></a></div>
+      // Event when lazyLoad is clicked
+      $("#lazyLoad").on("click", function () {
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({ event: "lazyLoad" });
+      });
 
-
-<script>
-// Product impressions are sent by pushing an impressions object
-// containing one or more impressionFieldObjects.
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  'ecommerce': {
-    'currencyCode': 'DKK',                       // Local currency is optional.
-    'impressions': [
-     {
-       'name': 'Triblend Android T-Shirt',       // Name or ID is required.
-       'id': '12345',
-       'price': '15.25',
-       'brand': 'Google',
-       'category': 'Main category/Sub category/Sub-sub category',
-       'variant': 'Gray',
-       'list': 'Product List',
-       'position': 1
-     },
-     {
-       'name': 'Donut Friday Scented T-Shirt',
-       'id': '99887766',
-       'price': '33.75',
-       'brand': 'Apple brand',
-       'category': 'Main category/Sub category/Sub-sub category',
-       'variant': 'Apple variant',
-       'list': 'Product List',
-       'position': 2
-     }]
-  }, 'event': 'impressionSent'
-});
-
-
-// Event when lazyLoad is clicked
-$("#lazyLoad").on("click", function(){
-
-    window.dataLayer = window.dataLayer || [];
-    dataLayer.push({ 'event': 'lazyLoad' });
-
-  });
-
-
-// Event when product is clicked
-$("#productClick").on("click", function() {
-
-  /**
- * Call this function when a user clicks on a product link. This function uses the event
- * callback datalayer variable to handle navigation after the ecommerce data has been sent
- * to Google Analytics.
- * @param {Object} productObj An object representing a product.
- */
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-    'event': 'productClick',
-    'ecommerce': {
-      'click': {
-        'actionField': {'list': 'Product List'},      // Optional list property.
-        'products': [{
-          'name': 'Triblend Android T-Shirt',       // Name or ID is required.
-          'id': '12345',
-          'price': '15.25',
-          'brand': 'Google',
-          'category': 'Main category/Sub category/Sub-sub category',
-          'variant': 'Gray'
-         }]
-       }
-     }, 'eventCallback' : function() {
+      // Event when product is clicked
+      $("#productClick").on("click", function () {
+        /**
+         * Call this function when a user clicks on a product link. This function uses the event
+         * callback datalayer variable to handle navigation after the ecommerce data has been sent
+         * to Google Analytics.
+         * @param {Object} productObj An object representing a product.
+         */
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({
+          event: "productClick",
+          ecommerce: {
+            click: {
+              actionField: { list: "Product List" }, // Optional list property.
+              products: [
+                {
+                  name: "Triblend Android T-Shirt", // Name or ID is required.
+                  id: "12345",
+                  price: "15.25",
+                  brand: "Google",
+                  category: "Main category/Sub category/Sub-sub category",
+                  variant: "Gray",
+                },
+              ],
+            },
+          },
+          eventCallback: function () {
             location.assign("productPage.html");
-          }
-  });
-});
-</script>
-
-
-	
-</body>
+          },
+        });
+      });
+    </script>
+  </body>
 </html>

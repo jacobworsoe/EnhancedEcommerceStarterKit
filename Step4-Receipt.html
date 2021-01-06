@@ -1,106 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Step 4: Receipt</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Step 4: Receipt</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-  <script>
-// Push kundenummer til dataLayer
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  'uid': 'kunde_1234567890'
-});
-</script>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-TDMCBQ3");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <script>
+      // Push kundenummer til dataLayer
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        uid: "kunde_1234567890",
+      });
+    </script>
 
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TDMCBQ3"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
-<!-- End Google Tag Manager -->
+    <h1>Step 4: Receipt</h1>
 
-<h1>Step 4: Receipt</h1>
+    <div><a href="homePage.html">Back to start: Home Page >></a></div>
+    <br />
+    <div><a href="Step5-Refund.html">Wrong product? Go to Refund >></a></div>
 
-<div><a href="/">Back to start: Home Page >></a></div>
-<br />
-<div><a href="Step5-Refund.html">Wrong product? Go to Refund >></a></div>
-
-
-<script>
-/**
- * A function to handle a click on a checkout button. This function uses the eventCallback
- * data layer variable to handle navigation after the ecommerce data has been sent to Google Analytics.
- */
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-    'event': 'checkout',
-    'ecommerce': {
-      'checkout': {
-        'actionField': {'step': 4 },
-        'products': [{
-          'name': 'Triblend Android T-Shirt',
-          'id': '12345',
-          'price': '15.25',
-          'brand': 'Online brand',
-          'category': 'Online Category',
-          'variant': 'Online Variant',
-          'quantity': 1
-       }]
-     }
-   }
-   });
-</script>
-
-
-<script>
-// Send transaction data with a pageview if available
-// when the page loads. Otherwise, use an event when the transaction
-// data becomes available.
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  'event': 'purchase',
-  'ecommerce': {
-	'currencyCode': 'USD',
-    'purchase': {
-      'actionField': {
-        'id': 'T123456',
-        'affiliation': 'affiliation: Online',
-        'revenue': '35.43',
-        'tax':'4.90',
-        'shipping': '5.99',
-        'coupon': 'SUMMER_SALE'
-      },
-      'products': [{
-        'name': 'Triblend Android T-Shirt',
-        'id': '12345',
-        'price': '15.25',
-        'brand': 'Wagner',
-        'category': 'T-shirts',
-        'variant': 'Blue',
-        'quantity': 1,
-        'coupon': 'free blue shirt'
-       },
-       {
-        'name': 'Triblend Android T-Shirt',
-        'id': '12345',
-        'price': '15.25',
-        'brand': 'Wagner',
-        'category': 'T-shirts',
-        'variant': 'Red',
-        'quantity': 2,
-        'coupon': 'summer sale for red shirt'
-       }]
-    }
-  }
-});
-</script>
-	
-</body>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          purchase: {
+            actionField: {
+              id: "T123456",
+              affiliation: "Online",
+              revenue: "4900",
+              tax: "1000",
+              shipping: "100",
+              coupon: "SUMMER_SALE",
+            },
+            products: [
+              {
+                name: "Triblend Android T-Shirt",
+                id: "12345",
+                price: "1525",
+                brand: "Google",
+                category: "Apparel",
+                variant: "Gray",
+                quantity: 1,
+                coupon: "",
+                dimension1: "First product in cart",
+                metric1: 1,
+              },
+              {
+                name: "Donut Friday Scented T-Shirt",
+                id: "67890",
+                price: "3375",
+                brand: "Google",
+                category: "Apparel",
+                variant: "Black",
+                quantity: 1,
+                dimension1: "Not first product in cart",
+                metric2: 1,
+              },
+            ],
+          },
+        },
+      });
+    </script>
+  </body>
 </html>

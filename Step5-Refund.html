@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Step 5: Refund</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Step 5: Refund</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-	<script>
-// Push kundenummer til dataLayer
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  'uid': 'kunde_1234567890'
-});
-</script>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-TDMCBQ3");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <script>
+      // Push kundenummer til dataLayer
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        uid: "kunde_1234567890",
+      });
+    </script>
 
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TDMCBQ3"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
-<!-- End Google Tag Manager -->
+    <h1>Step 5: Refund</h1>
 
-<h1>Step 5: Refund</h1>
+    <div><a href="homePage.html">Back to start: Home Page >></a></div>
 
-
-<div><a href="/">Back to start: Home Page >></a></div>
-
-
-<script>
-// Refund an entire transaction by providing the transaction ID. This example assumes the details
-// of the completed refund are available when the page loads:
-dataLayer.push({
-  'event': 'refund',
-  'ecommerce': {
-    'refund': {
-      'actionField': {'id': 'T123456'}         // Transaction ID. Required for purchases and refunds.
-    }
-  }
-});
-</script>
-	
-</body>
+    <script>
+      // Refund an entire transaction by providing the transaction ID. This example assumes the details
+      // of the completed refund are available when the page loads:
+      dataLayer.push({
+        event: "refund",
+        ecommerce: {
+          refund: {
+            actionField: { id: "T123456" }, // Transaction ID. Required for purchases and refunds.
+          },
+        },
+      });
+    </script>
+  </body>
 </html>

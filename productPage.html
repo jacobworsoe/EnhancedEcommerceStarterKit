@@ -1,56 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Product Page</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<body> 
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Page</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-TDMCBQ3");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <h1>Product Page</h1>
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TDMCBQ3');</script>
-<!-- End Google Tag Manager -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        event: "productDetailsView",
+        ecommerce: {
+          detail: {
+            products: [
+              {
+                name: "Triblend Android T-Shirt",
+                id: "12345",
+                price: "15.25",
+                brand: "Google",
+                category: "Apparel",
+                variant: "Gray",
+              },
+              {
+                name: "Detail view only",
+                id: "99999",
+                price: "33.75",
+                brand: "Google",
+                category: "Apparel",
+                variant: "Black",
+                quantity: 1,
+              },
+            ],
+          }, // detail
+        }, // ecommerce
+      }); // dataLayer
+    </script>
 
-<h1>Product Page</h1>
+    <a href="addToBasket.html"
+      ><button type="button" class="btn btn-primary btn-lg">
+        Add to cart >>
+      </button></a
+    >
 
-<script>
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  event: "productDetailsView",
-  ecommerce: {
-    detail: {
-      products: [
-        {
-          name: "Triblend Android T-Shirt",
-          id: "12345",
-          price: "15.25",
-          brand: "Google",
-          category: "Apparel",
-          variant: "Gray"
-        },
-     {
-       name: 'Donut Friday Scented T-Shirt',
-       id: '67890',
-       price: '33.75',
-       brand: 'Google',
-       category: 'Apparel',
-       variant: 'Black',
-       quantity: 1       
-     }
-      ]
-    } // detail
-  } // ecommerce
-}); // dataLayer
-</script>
-
-<a href="addToBasket.html"><button type="button" class="btn btn-primary btn-lg">Add to cart >></button></a>
-
-<a href="Step1-Basket.html"><button type="button" class="btn btn-secondary btn-lg">Jump to checkout >></button></a>
-	
-</body>
+    <a href="Step1-Basket.html"
+      ><button type="button" class="btn btn-secondary btn-lg">
+        Jump to checkout >>
+      </button></a
+    >
+  </body>
 </html>

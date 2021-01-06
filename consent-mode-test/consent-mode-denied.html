@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Consent Mode - Denied</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        padding: 20px;
+      }
+    </style>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+      });
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-TDMCBQ3");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <h1>Denied, pageview</h1>
+    <p>
+      Dvs. der sendes kun et cookieless ping. Bør ikke optræder i rapporterne.
+    </p>
+
+    <p>
+      <b>Bemærk:</b> Selvom man har en cookie fra et tidligere besøg (eller
+      fordi man har besøg den anden testside først) så bør denied gøre at det
+      stadig bliver sendt som et cookieless ping. Men for at holde testen ren,
+      bør denne side ikke besøges efter den anden side er besøgt.
+    </p>
+
+    <a
+      href="http://enhanced-ecommerce.jacobworsoe.dk/consent-mode-test/consent-mode-denied-then-update.html"
+      >Gå til den næste testside.</a
+    >
+  </body>
+</html>

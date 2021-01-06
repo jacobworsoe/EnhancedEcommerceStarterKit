@@ -2,14 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Step 1: Basket (option)</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <title>Consent Mode - Denied, update</title>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+
+    <style>
+      body {
+        padding: 20px;
+      }
+    </style>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+      });
+    </script>
+
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
@@ -24,35 +41,25 @@
       })(window, document, "script", "dataLayer", "GTM-TDMCBQ3");
     </script>
     <!-- End Google Tag Manager -->
-  </head>
-  <body>
-    <h1>Step 1: Basket (option)</h1>
 
     <script>
-      window.dataLayer = window.dataLayer || [];
-      dataLayer.push({
-        event: "checkout",
-        ecommerce: {
-          checkout_option: {
-            actionField: {
-              step: 1,
-              option: "MobilePay",
-            },
-          },
-        },
+      gtag("consent", "update", {
+        ad_storage: "granted",
+        analytics_storage: "granted",
       });
     </script>
+  </head>
+  <body>
+    <h1>Denied, pageview, update</h1>
+    <p>
+      Dvs. der sendes et cookieless ping og derefter køres update, som sætter en
+      cookie. Optræder dette pageview i rapporterne?
+    </p>
 
-    <a href="Step2-Address.html"
-      ><button type="button" class="btn btn-primary btn-lg">
-        Continue to Step 2: Address >>
-      </button></a
-    >
-
-    <a href="productPage.html"
-      ><button type="button" class="btn btn-secondary btn-lg">
-        << Back to Product Detail Page
-      </button></a
-    >
+    <p>
+      <a href="consent-mode-denied-then-update-then-pageview.html"
+        >Fortsæt nu til denne side.</a
+      >
+    </p>
   </body>
 </html>

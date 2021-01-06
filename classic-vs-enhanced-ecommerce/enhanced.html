@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Enhanced Ecommerce</title>	
+</head>
+<body>
+
+<h1>Enhanced Ecommerce</h1>
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-11679419-9', 'auto');
+ga('require', 'ec');
+
+ga('ec:addProduct', {               // Provide product details in an productFieldObject.
+  'id': 'P12345',                   // Product ID (string).
+  'name': 'Enhanced Ecommerce', // Product name (string).
+  'category': 'Apparel',            // Product category (string).
+  'brand': 'Google',                // Product brand (string).
+  'variant': 'black',               // Product variant (string).
+  'price': '29.20',                 // Product price (number).
+  'coupon': 'APPARELSALE',          // Product coupon (string).
+  'quantity': 1                     // Product quantity (number).
+});
+
+ga('ec:setAction', 'purchase', {          // Transaction details are provided in an actionFieldObject.
+  'id': 'T12345',                         // (Required) Transaction id (string).
+  'affiliation': 'Enhanced Ecommerce', // Affiliation (string).
+  'revenue': '37.39',                     // Revenue (number).
+  'tax': '2.85',                          // Tax (number).
+  'shipping': '5.34',                     // Shipping (number).
+  'coupon': 'SUMMER2013'                  // Transaction coupon (string).
+});
+
+ga('send', 'pageview');     // Send transaction data with initial pageview.
+
+
+</script>
+<!-- End Google Analytics -->
+
+
+</body>
+</html>
