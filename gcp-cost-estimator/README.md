@@ -12,7 +12,10 @@ A read-only audit script that, across as many Google accounts as you give it:
 
 It never writes to any GCP resource and never creates API keys or
 service-account credentials — it only requests a read-only OAuth scope
-against your own Google account(s).
+against your own Google account(s). There are two ways to run it: a CLI
+(`cli.py`) or a small local web app (`webapp/app.py`) with a browser-based
+OAuth flow, a live progress log, and results tables — same scan, same
+package underneath, pick whichever fits.
 
 ## 1. One-time setup
 
@@ -26,31 +29,68 @@ against your own Google account(s).
    - App Engine Admin API
    - Compute Engine API
    - Cloud Monitoring API
-2. Under "APIs & Services > Credentials", create an **OAuth client ID** of
-   type **Desktop app**. Download the JSON and save it as
-   `client_secret.json` in this directory (or point `client_secret_file` in
-   your config at wherever you keep it — just don't commit it).
+2. Under "APIs & Services > Credentials", create an OAuth client ID:
+   - For the **CLI**: type **Desktop app**.
+   - For the **web app**: type **Web application**, with an authorized
+     redirect URI of `http://localhost:8765/oauth2callback` (or whatever
+     `redirect_uri`/`port` you set in `config.yaml`).
+   Download the JSON and save it as `client_secret.json` in this directory
+   (or point `client_secret_file` in your config at wherever you keep it —
+   just don't commit it).
 3. If your OAuth client is in "Testing" publishing status, add every Google
    account you plan to scan as a **test user** in the OAuth consent screen
    settings, or the consent flow will refuse to sign them in.
 4. `pip install -r requirements.txt`
-5. `cp config.example.yaml config.yaml` and fill in your accounts.
+5. `cp config.example.yaml config.yaml` and fill in your values.
 
-## 2. Running it
+## 2. Running it — CLI
 
 ```bash
 python -m gcp_cost_estimator.cli --config config.yaml
 ```
 
-The first run opens a browser window once per account listed in
-`config.yaml` for OAuth consent (read-only scope). Refresh tokens are then
-cached under `tokens/`, so subsequent runs are non-interactive until a token
-is revoked or expires.
+The first run opens a browser window once per account listed under
+`accounts:` in `config.yaml` for OAuth consent (read-only scope). Refresh
+tokens are then cached under `tokens/`, so subsequent runs are
+non-interactive until a token is revoked or expires.
 
 Output:
 - A console summary.
 - `output/report.json` — everything, machine-readable.
 - `output/ga4_bigquery_export.csv` and `output/gtm_hosting.csv`.
+
+## 2b. Running it — local web app
+
+```bash
+python -m webapp.app --config config.yaml
+```
+
+Then open **http://localhost:8765/** (use `localhost`, not `127.0.0.1` —
+it has to match whatever host is in the registered redirect URI). From
+there:
+
+1. Click **"+ Connect a Google account"** once per account (client,
+   colleague, your own) — this redirects to Google's real consent screen
+   and back, then lists the account as connected. Repeat for every board
+   member's account; each one is saved to the same `tokens/` cache the CLI
+   uses, so accounts connected here also work with the CLI and vice versa.
+2. Set the FX rate / billing-export lookback if you want something other
+   than the config defaults, and click **Start scan**.
+3. Watch the live log while it runs, then browse the GA4 and GTM results
+   tables, or download the same CSV/JSON the CLI produces.
+
+Notes:
+- The server binds to `127.0.0.1` by default (see `host` in
+  `config.yaml`) — it is not reachable from your network unless you
+  deliberately change that.
+- It sets `OAUTHLIB_INSECURE_TRANSPORT=1` so Google's OAuth library accepts
+  the plain-HTTP `localhost` redirect. That is safe only because the app
+  isn't exposed beyond localhost — don't reuse this setting for anything
+  actually deployed on a network.
+- The Flask session secret is regenerated every process start, so if you
+  restart the server mid-consent-flow, just click connect again.
+- Scans run in a background thread; only one at a time (starting a second
+  while one's running returns an error rather than queuing).
 
 ## 3. How the estimates work
 

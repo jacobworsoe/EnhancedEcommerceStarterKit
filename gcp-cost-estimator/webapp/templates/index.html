@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GCP Cost Estimator</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+  <h1>GCP Cost Estimator</h1>
+  <p class="subtitle">GA4 &rarr; BigQuery export storage cost, and GTM server-side hosting cost, across every Google account you connect.</p>
+</header>
+
+<section id="accounts-section">
+  <h2>Connected accounts</h2>
+  <ul id="account-list"><li class="muted">Loading...</li></ul>
+  <a class="button" href="/oauth/connect">+ Connect a Google account</a>
+</section>
+
+<section id="scan-section">
+  <h2>Run scan</h2>
+  <form id="scan-form">
+    <label>
+      USD &rarr; EUR rate
+      <input type="number" step="0.01" id="fx-rate" value="{{ fx_rate }}">
+    </label>
+    <label>
+      Billing export lookback (days)
+      <input type="number" step="1" min="1" id="billing-export-days" value="{{ billing_export_days }}">
+    </label>
+    <button type="submit" id="start-button">Start scan</button>
+  </form>
+  <pre id="log" class="hidden"></pre>
+</section>
+
+<section id="results-section" class="hidden">
+  <h2>Results</h2>
+  <p>
+    <a class="button" href="/download/report.json">Download JSON</a>
+    <a class="button" href="/download/ga4_bigquery_export.csv">Download GA4 CSV</a>
+    <a class="button" href="/download/gtm_hosting.csv">Download GTM CSV</a>
+  </p>
+
+  <h3>GA4 &rarr; BigQuery export storage</h3>
+  <div class="table-wrap"><table id="ga4-table"><thead><tr>
+    <th>Project</th><th>Dataset</th><th>Location</th><th>Tables</th>
+    <th>Active GiB</th><th>Long-term GiB</th><th>Monthly cost (EUR)</th><th>Source</th>
+  </tr></thead><tbody></tbody></table></div>
+
+  <h3>GTM server-side hosting candidates</h3>
+  <div class="table-wrap"><table id="gtm-table"><thead><tr>
+    <th>Project</th><th>Type</th><th>Service</th><th>Region</th><th>Likely GTM SS</th>
+    <th>Avg instances (30d)</th><th>Monthly cost (EUR)</th><th>Confidence</th><th>Hostname</th>
+  </tr></thead><tbody></tbody></table></div>
+</section>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

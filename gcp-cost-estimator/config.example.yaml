@@ -2,20 +2,42 @@
 # Never commit config.yaml, client_secret.json, or the tokens/ directory.
 
 # Path to the OAuth client secret JSON you downloaded from Google Cloud
-# Console (APIs & Services > Credentials > Create OAuth client ID > Desktop app).
+# Console (APIs & Services > Credentials > Create OAuth client ID).
+# - CLI (cli.py) needs a "Desktop app" type client.
+# - Web app (webapp/app.py) needs a "Web application" type client with
+#   redirect_uri (below) registered as an authorized redirect URI.
+# These can be two different client_secret files if you use both entrypoints
+# - point this at whichever one matches the entrypoint you're running.
 client_secret_file: client_secret.json
 
-# Where cached refresh tokens are stored, one file per account.
+# Where cached refresh tokens are stored, one file per account. Shared by
+# both entrypoints, so an account authorized in one is available in the other.
 token_dir: tokens
 
+# Where CSV/JSON reports are written. Shared by both entrypoints.
+output_dir: output
+
+# --- CLI only (cli.py) ---
 # Every Google account (client, colleague, your own) you want the scan to run
 # as. The first time you run the tool it will open a browser once per
-# account listed here for consent; afterwards it's non-interactive.
+# account listed here for consent; afterwards it's non-interactive. The web
+# app ignores this list entirely - accounts are connected from the browser
+# UI instead (see webapp/app.py's README section).
 accounts:
   - you@yourcompany.com
   - client-a@example.com
   - client-b@example.com
 
+# --- Web app only (webapp/app.py) ---
+# Must exactly match an authorized redirect URI on your Web application
+# OAuth client, and you must open the app via this same host (i.e. via
+# "localhost", not "127.0.0.1", if that's what's registered here).
+redirect_uri: http://localhost:8765/oauth2callback
+host: 127.0.0.1
+port: 8765
+
+# --- Shared defaults (overridable per-run in the CLI flags / web UI form) ---
 # USD -> EUR rate used to convert Google's (USD) list prices. Update this to
 # the current rate before relying on the output for a real cost conversation.
 fx_rate_usd_to_eur: 0.92
+billing_export_days: 30
