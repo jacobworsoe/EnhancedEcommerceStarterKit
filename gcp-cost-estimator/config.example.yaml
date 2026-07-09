@@ -1,0 +1,21 @@
+# Copy this file to config.yaml (which is gitignored) and fill in your own values.
+# Never commit config.yaml, client_secret.json, or the tokens/ directory.
+
+# Path to the OAuth client secret JSON you downloaded from Google Cloud
+# Console (APIs & Services > Credentials > Create OAuth client ID > Desktop app).
+client_secret_file: client_secret.json
+
+# Where cached refresh tokens are stored, one file per account.
+token_dir: tokens
+
+# Every Google account (client, colleague, your own) you want the scan to run
+# as. The first time you run the tool it will open a browser once per
+# account listed here for consent; afterwards it's non-interactive.
+accounts:
+  - you@yourcompany.com
+  - client-a@example.com
+  - client-b@example.com
+
+# USD -> EUR rate used to convert Google's (USD) list prices. Update this to
+# the current rate before relying on the output for a real cost conversation.
+fx_rate_usd_to_eur: 0.92
