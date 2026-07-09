@@ -25,7 +25,7 @@ from google.api_core.exceptions import GoogleAPIError
 from google.cloud import bigquery
 
 from . import pricing
-from .billing_export import find_billing_export_tables, query_bigquery_storage_cost_eur
+from .billing_export import BillingExportSource, query_service_cost_usd
 from .models import GA4ExportFinding
 
 logger = logging.getLogger(__name__)
@@ -74,7 +74,7 @@ def analyze_ga4_dataset(
     account_email: str,
     fx_rate: float,
     billing_export_days: int = 30,
-    billing_export_table: Optional[str] = None,
+    billing_source: Optional[BillingExportSource] = None,
 ) -> GA4ExportFinding:
     dataset_ref = bigquery.DatasetReference(project_id, dataset_id)
     dataset = bq_client.get_dataset(dataset_ref)
@@ -135,17 +135,19 @@ def analyze_ga4_dataset(
     finding.active_bytes = total_active
     finding.longterm_bytes = total_longterm
 
-    # Try to get a real number from a billing export table first.
-    monthly_eur = None
-    if billing_export_table:
-        monthly_eur = query_bigquery_storage_cost_eur(
-            bq_client, billing_export_table, project_id, billing_export_days, fx_rate
+    # Prefer a real number from a billing export table, from whichever
+    # account (board) actually has visibility into it, over estimating.
+    monthly_usd = None
+    if billing_source:
+        monthly_usd = query_service_cost_usd(
+            billing_source, project_id, "BigQuery", billing_export_days, sku_keyword="storage"
         )
 
-    if monthly_eur is not None:
+    if monthly_usd is not None:
         finding.cost_source = "billing_export"
-        finding.monthly_cost_eur = monthly_eur
-        finding.monthly_cost_usd = monthly_eur / fx_rate if fx_rate else 0.0
+        finding.monthly_cost_usd = monthly_usd
+        finding.monthly_cost_eur = pricing.usd_to_eur(monthly_usd, fx_rate)
+        finding.notes.append(f"Real cost from billing export, read via account {billing_source.account.email}.")
     else:
         finding.cost_source = "estimated"
         rates = pricing.bq_storage_price(location, storage_billing_model)
@@ -169,13 +171,15 @@ def analyze_project_ga4_exports(
     account_email: str,
     fx_rate: float,
     billing_export_days: int = 30,
+    billing_source: Optional[BillingExportSource] = None,
 ) -> List[GA4ExportFinding]:
-    billing_tables = find_billing_export_tables(bq_client, project_id)
-    # If this project's own billing account export lives elsewhere, the CLI
-    # layer may pass a pre-resolved table in via analyze_ga4_dataset callers;
-    # here we only use one found directly inside the same project.
-    billing_export_table = next(iter(billing_tables.values()), None)
-
+    """`billing_source` should come from the cross-account registry built in
+    `billing_export.build_billing_export_registry`, so it reflects whichever
+    authorized account actually has visibility into the export table - that
+    may not be this project's own account, which is exactly the case this
+    is meant to cover (one board's account can see the billing export,
+    another's can only see the GA4 project). Pass None to always fall back
+    to the list-price estimate."""
     findings = []
     for dataset_id in find_ga4_datasets(bq_client, project_id):
         findings.append(
@@ -186,7 +190,7 @@ def analyze_project_ga4_exports(
                 account_email,
                 fx_rate,
                 billing_export_days,
-                billing_export_table,
+                billing_source,
             )
         )
     return findings

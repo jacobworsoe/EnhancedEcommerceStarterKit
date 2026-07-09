@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import List
+from typing import Dict, List
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -53,14 +53,39 @@ def _attach_billing_info(billing_service, info: ProjectInfo) -> None:
         logger.debug("No billing info for %s (%s)", info.project_id, exc)
 
 
+def discover_projects_by_account(accounts: List[Account]) -> Dict[str, List[ProjectInfo]]:
+    """List projects per account, without collapsing overlap. Needed
+    because two accounts can see the same project but have different IAM
+    roles on it (e.g. one has BigQuery access, the other has Billing Account
+    Viewer) - later steps need to know about every account that can see a
+    project, not just the first one discovery happened to hit."""
+    return {account.email: list_projects_for_account(account) for account in accounts}
+
+
+def dedupe_projects(projects_by_account: Dict[str, List[ProjectInfo]]) -> List[ProjectInfo]:
+    """Collapse per-account project lists into one entry per project_id, for
+    use as the scan work-list. Prefers the account that has billing enabled
+    as the "primary" one to run the main per-project scan under (a good
+    proxy for "more likely to also have cost visibility"), and records every
+    other account that can also see the project in `also_visible_via` so
+    later steps (e.g. the billing-export registry) can still use them."""
+    by_project: Dict[str, List[ProjectInfo]] = {}
+    for account_email, projects in projects_by_account.items():
+        for proj in projects:
+            by_project.setdefault(proj.project_id, []).append(proj)
+
+    deduped: List[ProjectInfo] = []
+    for project_id, entries in by_project.items():
+        billing_first = sorted(entries, key=lambda p: not p.billing_enabled)
+        primary = billing_first[0]
+        primary.also_visible_via = [e.account_email for e in entries if e.account_email != primary.account_email]
+        deduped.append(primary)
+    return deduped
+
+
 def discover_all_projects(accounts: List[Account]) -> List[ProjectInfo]:
-    """List projects across all accounts, de-duplicating by project_id
-    while keeping a record of which account(s) can see it."""
-    seen = {}
-    for account in accounts:
-        for proj in list_projects_for_account(account):
-            if proj.project_id not in seen:
-                seen[proj.project_id] = proj
-            # else: another account can also see this project - first one wins for
-            # API-call purposes, but either credential works equally well.
-    return list(seen.values())
+    """Convenience wrapper: discover per account, then dedupe to a single
+    scan work-list. See `discover_projects_by_account` / `dedupe_projects`
+    if you need the un-collapsed per-account view (the CLI does, to build
+    the cross-account billing-export registry)."""
+    return dedupe_projects(discover_projects_by_account(accounts))

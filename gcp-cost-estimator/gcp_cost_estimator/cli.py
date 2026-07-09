@@ -11,7 +11,9 @@ from google.cloud import bigquery
 
 from . import pricing
 from .auth import load_accounts
-from .discovery import discover_all_projects
+from .billing_export import billing_account_id_from_name, build_billing_export_registry
+from .dedupe import dedupe_ga4_findings, dedupe_gtm_findings
+from .discovery import dedupe_projects, discover_projects_by_account
 from .ga4_bigquery import analyze_project_ga4_exports
 from .gtm_hosting import discover_app_engine_services, discover_cloud_run_services
 from .report import print_console_report, write_csv, write_json
@@ -48,9 +50,24 @@ def main() -> None:
     logger.info("Authorizing %d account(s)...", len(email_hints))
     accounts = load_accounts(client_secret_file, token_dir, email_hints)
 
-    logger.info("Discovering projects...")
-    projects = discover_all_projects(accounts)
-    logger.info("Found %d project(s) across all accounts.", len(projects))
+    logger.info("Discovering projects per account...")
+    projects_by_account = discover_projects_by_account(accounts)
+    projects = dedupe_projects(projects_by_account)
+    logger.info("Found %d distinct project(s) across all accounts.", len(projects))
+    overlapping = [p for p in projects if p.also_visible_via]
+    if overlapping:
+        logger.info(
+            "%d project(s) are visible through more than one account (e.g. %s via %s + %s).",
+            len(overlapping), overlapping[0].project_id, overlapping[0].account_email,
+            ", ".join(overlapping[0].also_visible_via),
+        )
+
+    logger.info("Scanning for billing export tables across every project every account can see...")
+    billing_registry = build_billing_export_registry(accounts, projects_by_account)
+    logger.info(
+        "%d billing account(s) have a reachable export table (used in preference to estimation).",
+        len(billing_registry),
+    )
 
     account_by_email = {a.email: a for a in accounts}
 
@@ -59,13 +76,25 @@ def main() -> None:
 
     for project in projects:
         account = account_by_email[project.account_email]
-        logger.info("Scanning project %s (account %s)...", project.project_id, project.account_email)
+        billing_account_id = billing_account_id_from_name(project.billing_account_name)
+        billing_source = billing_registry.get(billing_account_id) if billing_account_id else None
+
+        logger.info(
+            "Scanning project %s (account %s)%s...",
+            project.project_id, project.account_email,
+            " [real billing data available]" if billing_source else "",
+        )
 
         try:
             bq_client = bigquery.Client(project=project.project_id, credentials=account.credentials)
             ga4_findings.extend(
                 analyze_project_ga4_exports(
-                    bq_client, project.project_id, project.account_email, fx_rate, args.billing_export_days
+                    bq_client,
+                    project.project_id,
+                    project.account_email,
+                    fx_rate,
+                    args.billing_export_days,
+                    billing_source,
                 )
             )
         except Exception as exc:  # noqa: BLE001 - keep scanning other projects on failure
@@ -74,7 +103,12 @@ def main() -> None:
         try:
             gtm_findings.extend(
                 discover_cloud_run_services(
-                    project.project_id, account.credentials, project.account_email, fx_rate
+                    project.project_id,
+                    account.credentials,
+                    project.account_email,
+                    fx_rate,
+                    billing_source,
+                    args.billing_export_days,
                 )
             )
         except Exception as exc:  # noqa: BLE001
@@ -83,11 +117,19 @@ def main() -> None:
         try:
             gtm_findings.extend(
                 discover_app_engine_services(
-                    project.project_id, account.credentials, project.account_email, fx_rate
+                    project.project_id,
+                    account.credentials,
+                    project.account_email,
+                    fx_rate,
+                    billing_source,
+                    args.billing_export_days,
                 )
             )
         except Exception as exc:  # noqa: BLE001
             logger.warning("App Engine scan failed for %s: %s", project.project_id, exc)
+
+    ga4_findings = dedupe_ga4_findings(ga4_findings)
+    gtm_findings = dedupe_gtm_findings(gtm_findings)
 
     print_console_report(ga4_findings, gtm_findings)
     write_json(ga4_findings, gtm_findings, args.output_dir / "report.json")

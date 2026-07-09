@@ -34,6 +34,8 @@ def print_console_report(ga4_findings: List[GA4ExportFinding], gtm_findings: Lis
         )
         print(f"  active={gib_active:,.2f} GiB  long-term={gib_longterm:,.2f} GiB")
         print(f"  Estimated monthly cost: {_fmt_eur(f.monthly_cost_eur)}  (source: {f.cost_source})")
+        if f.also_visible_via:
+            print(f"  also visible via: {', '.join(f.also_visible_via)}")
         for note in f.notes:
             print(f"  note: {note}")
 
@@ -54,6 +56,8 @@ def print_console_report(ga4_findings: List[GA4ExportFinding], gtm_findings: Lis
         print(f"  avg instances: 7d={avg7}  30d={avg30}")
         print(f"  Estimated monthly cost: {_fmt_eur(f.monthly_cost_eur)}  (confidence: {f.cost_confidence})")
         print(f"  Hostname: {f.hostname or 'unknown'}  (source: {f.hostname_source})")
+        if f.also_visible_via:
+            print(f"  also visible via: {', '.join(f.also_visible_via)}")
         for note in f.notes:
             print(f"  note: {note}")
 
@@ -79,7 +83,7 @@ def write_csv(ga4_findings: List[GA4ExportFinding], gtm_findings: List[GTMHostin
         writer = csv.writer(fh)
         writer.writerow(
             [
-                "project_id", "account_email", "dataset_id", "property_id", "location",
+                "project_id", "account_email", "also_visible_via", "dataset_id", "property_id", "location",
                 "storage_billing_model", "table_count", "oldest_table_date", "newest_table_date",
                 "active_gib", "longterm_gib", "monthly_cost_eur", "cost_source", "notes",
             ]
@@ -87,8 +91,8 @@ def write_csv(ga4_findings: List[GA4ExportFinding], gtm_findings: List[GTMHostin
         for f in ga4_findings:
             writer.writerow(
                 [
-                    f.project_id, f.account_email, f.dataset_id, f.property_id, f.location,
-                    f.storage_billing_model, f.table_count, f.oldest_table_date, f.newest_table_date,
+                    f.project_id, f.account_email, " | ".join(f.also_visible_via), f.dataset_id, f.property_id,
+                    f.location, f.storage_billing_model, f.table_count, f.oldest_table_date, f.newest_table_date,
                     round(f.active_bytes / (1024 ** 3), 3), round(f.longterm_bytes / (1024 ** 3), 3),
                     round(f.monthly_cost_eur, 2), f.cost_source, " | ".join(f.notes),
                 ]
@@ -99,7 +103,7 @@ def write_csv(ga4_findings: List[GA4ExportFinding], gtm_findings: List[GTMHostin
         writer = csv.writer(fh)
         writer.writerow(
             [
-                "project_id", "account_email", "service_type", "service_name", "region",
+                "project_id", "account_email", "also_visible_via", "service_type", "service_name", "region",
                 "is_likely_gtm_ss", "gtm_signal", "cpu", "memory", "min_instances", "max_instances",
                 "cpu_always_allocated", "avg_instances_7d", "avg_instances_30d",
                 "monthly_cost_eur", "cost_confidence", "hostname", "hostname_source", "notes",
@@ -108,8 +112,8 @@ def write_csv(ga4_findings: List[GA4ExportFinding], gtm_findings: List[GTMHostin
         for f in gtm_findings:
             writer.writerow(
                 [
-                    f.project_id, f.account_email, f.service_type, f.service_name, f.region,
-                    f.is_likely_gtm_ss, f.gtm_signal, f.cpu, f.memory, f.min_instances, f.max_instances,
+                    f.project_id, f.account_email, " | ".join(f.also_visible_via), f.service_type, f.service_name,
+                    f.region, f.is_likely_gtm_ss, f.gtm_signal, f.cpu, f.memory, f.min_instances, f.max_instances,
                     f.cpu_always_allocated, f.avg_instances_7d, f.avg_instances_30d,
                     round(f.monthly_cost_eur, 2), f.cost_confidence, f.hostname, f.hostname_source,
                     " | ".join(f.notes),

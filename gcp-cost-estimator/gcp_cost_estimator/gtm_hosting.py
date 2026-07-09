@@ -13,6 +13,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 from . import pricing
+from .billing_export import BillingExportSource, query_service_cost_usd
 from .hostname_discovery import (
     app_engine_domain_mappings,
     cloud_run_domain_mapping,
@@ -141,8 +142,56 @@ def _memory_to_gib(memory_str: str) -> float:
         return 0.0
 
 
+def _apply_billing_export_cost(
+    findings: List[GTMHostingFinding],
+    billing_source: Optional[BillingExportSource],
+    project_id: str,
+    service_description: str,
+    billing_export_days: int,
+    fx_rate: float,
+) -> None:
+    """Overwrite estimated costs with a real total from the billing export,
+    when one is reachable, in preference to the configuration/usage-based
+    estimate. Billing export data isn't broken out per Cloud Run/App Engine
+    service, only per project+service-type, so with more than one candidate
+    in the same project the real total is prorated across them by their
+    relative estimated shares - noted as such rather than presented as
+    exact."""
+    if not billing_source or not findings:
+        return
+
+    total_usd = query_service_cost_usd(billing_source, project_id, service_description, billing_export_days)
+    if total_usd is None:
+        return
+
+    if len(findings) == 1:
+        findings[0].monthly_cost_usd = total_usd
+        findings[0].monthly_cost_eur = pricing.usd_to_eur(total_usd, fx_rate)
+        findings[0].cost_confidence = "billing_export"
+        findings[0].notes.append(f"Real cost from billing export, read via account {billing_source.account.email}.")
+        return
+
+    estimated_total = sum(f.monthly_cost_usd for f in findings)
+    for f in findings:
+        share = (f.monthly_cost_usd / estimated_total) if estimated_total else (1 / len(findings))
+        f.monthly_cost_usd = total_usd * share
+        f.monthly_cost_eur = pricing.usd_to_eur(f.monthly_cost_usd, fx_rate)
+        f.cost_confidence = "billing_export-prorated"
+        f.notes.append(
+            f"Real total {service_description} cost for this project came from the billing export "
+            f"(via account {billing_source.account.email}), but split across {len(findings)} services "
+            "by estimated share since the export isn't broken out per-service - treat the split, not the "
+            "project total, as approximate."
+        )
+
+
 def discover_cloud_run_services(
-    project_id: str, credentials, account_email: str, fx_rate: float
+    project_id: str,
+    credentials,
+    account_email: str,
+    fx_rate: float,
+    billing_source: Optional[BillingExportSource] = None,
+    billing_export_days: int = 30,
 ) -> List[GTMHostingFinding]:
     run_v2 = build("run", "v2", credentials=credentials, cache_discovery=False)
     run_v1 = build("run", "v1", credentials=credentials, cache_discovery=False)
@@ -271,11 +320,17 @@ def discover_cloud_run_services(
 
         findings.append(finding)
 
+    _apply_billing_export_cost(findings, billing_source, project_id, "Cloud Run", billing_export_days, fx_rate)
     return findings
 
 
 def discover_app_engine_services(
-    project_id: str, credentials, account_email: str, fx_rate: float
+    project_id: str,
+    credentials,
+    account_email: str,
+    fx_rate: float,
+    billing_source: Optional[BillingExportSource] = None,
+    billing_export_days: int = 30,
 ) -> List[GTMHostingFinding]:
     appengine = build("appengine", "v1", credentials=credentials, cache_discovery=False)
     monitoring = build("monitoring", "v3", credentials=credentials, cache_discovery=False)
@@ -370,4 +425,5 @@ def discover_app_engine_services(
 
         findings.append(finding)
 
+    _apply_billing_export_cost(findings, billing_source, project_id, "App Engine", billing_export_days, fx_rate)
     return findings

@@ -65,10 +65,9 @@ hundreds of tables are sampled from the most recent 60 and extrapolated,
 purely to keep runtime sane, and this is called out in the notes).
 
 Cost is worked out in this order of preference:
-1. **Real billing data**: if the project (or any project reachable by the
-   same account) has [billing export to
+1. **Real billing data**: if [billing export to
    BigQuery](https://cloud.google.com/billing/docs/how-to/export-data-bigquery)
-   already configured, the script finds that export table and queries the
+   is configured for the project's billing account, the script queries the
    actual BigQuery storage cost billed to the project. This is exact.
 2. **List-price estimate**: otherwise, the script applies BigQuery's public
    storage pricing to the measured bytes — active storage rate for tables
@@ -76,6 +75,32 @@ Cost is worked out in this order of preference:
    minus the first 10 GiB/month free tier. See `pricing.py` for the exact
    numbers and links to the live pricing pages — **update them before
    quoting a client**, prices drift and this is a snapshot.
+
+### Multiple accounts, overlapping project access, and uneven billing visibility
+
+It's normal for several accounts in `config.yaml` to see the same project,
+and for only some of them to have Billing Account Viewer (or wherever the
+billing export lives). To make sure that overlap actually helps rather than
+just producing duplicate rows or missing an available real cost:
+
+- Every account's project list is discovered independently first. A project
+  seen by more than one account is scanned once (the account with billing
+  enabled is preferred for the scan itself), and every other account that
+  can also see it is recorded (`also_visible_via`) rather than discarded.
+- Separately, the script scans **every** project **every** account can see
+  for a billing export table (a free metadata-only scan) and builds one
+  registry of `billing_account_id -> export table`, keyed off the billing
+  account rather than off any particular project or account. That means if
+  even one board's account can see the shared billing-export project, every
+  other project on that same billing account gets priced from real data —
+  regardless of which account happened to be used to scan that project's
+  GA4 datasets or Cloud Run services.
+- As a final safety net (in `dedupe.py`), the full finding list is grouped
+  by resource (project+dataset, or project+service) before the report is
+  written, and where a duplicate exists the entry with a real billing-export
+  cost always wins over one that's only an estimate — so mixed billing
+  visibility across boards can never accidentally leave an estimate in the
+  report when a real number was available from another account.
 
 ### GTM server-side hosting cost
 
@@ -98,6 +123,12 @@ For every Cloud Run service and App Engine version found, the script:
   around free tier being per-billing-account rather than per-service, and
   around CPU-only-allocated-during-requests billing being modeled only
   approximately.
+- Same billing-export preference as GA4: if the project's billing account
+  has a reachable export table, the real Cloud Run/App Engine cost replaces
+  the estimate. The export isn't broken out per-service, so if a project
+  has more than one candidate service the real total is split across them
+  by their estimated share and flagged as `billing_export-prorated` rather
+  than presented as exact per-service.
 
 ### Hostname discovery
 

@@ -22,6 +22,10 @@ class ProjectInfo:
     account_email: str
     billing_account_name: Optional[str] = None  # e.g. "billingAccounts/012345-ABCDEF-678901"
     billing_enabled: bool = False
+    # Every other account (besides account_email) that also has visibility
+    # into this same project. Populated when discovery finds the same
+    # project_id reachable through more than one authorized account.
+    also_visible_via: list = field(default_factory=list)
 
 
 @dataclass
@@ -40,6 +44,7 @@ class GA4ExportFinding:
     monthly_cost_usd: float = 0.0
     monthly_cost_eur: float = 0.0
     cost_source: str = "estimated"  # "billing_export" or "estimated"
+    also_visible_via: list = field(default_factory=list)
     notes: list = field(default_factory=list)
 
 
@@ -61,7 +66,9 @@ class GTMHostingFinding:
     avg_instances_30d: Optional[float] = None
     monthly_cost_usd: float = 0.0
     monthly_cost_eur: float = 0.0
-    cost_confidence: str = "estimated"  # "fixed-config" or "estimated-from-usage"
+    # "fixed-config" | "estimated-from-usage" | "billing_export" | "billing_export-prorated"
+    cost_confidence: str = "estimated"
     hostname: Optional[str] = None
     hostname_source: str = "none"  # "domain_mapping" | "load_balancer" | "default_url" | "none"
+    also_visible_via: list = field(default_factory=list)
     notes: list = field(default_factory=list)
